@@ -36,6 +36,9 @@
     <ClInclude Include="Reindeer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="NorthPoleHQ.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -54,6 +57,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Reindeer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="NorthPoleHQ.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
