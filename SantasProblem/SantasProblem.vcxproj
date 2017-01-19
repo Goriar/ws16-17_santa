@@ -88,12 +88,10 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\boost\boost_1_63_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\boost\boost_1_63_0\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,7 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Elf.h" />
-    <ClInclude Include="NorthPoleHQ.h" />
     <ClInclude Include="Reindeer.h" />
     <ClInclude Include="Santa.h" />
     <ClInclude Include="stdafx.h" />
@@ -157,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Elf.cpp" />
-    <ClCompile Include="NorthPoleHQ.cpp" />
     <ClCompile Include="Reindeer.cpp" />
     <ClCompile Include="Santa.cpp" />
     <ClCompile Include="SantasProblem.cpp" />

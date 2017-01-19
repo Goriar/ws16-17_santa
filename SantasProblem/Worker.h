@@ -4,10 +4,10 @@ class Worker
 public:
 	Worker();
 	~Worker();
-	virtual void work(void) = 0;
+	void sleep();
+	void wake();
 
 protected:
 	int m_currentStatus;
-	bool m_markedForDeletion = false;
 };
 

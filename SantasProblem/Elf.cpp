@@ -15,7 +15,3 @@ Elf::~Elf()
 void Elf::makePresents() {
 
 }
-
-void Elf::work(void) {
-
-}

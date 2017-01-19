@@ -23,7 +23,3 @@ void Santa::helpElves() {
 void Santa::strapInReindeers() {
 
 }
-
-void Santa::work(void) {
-
-}
