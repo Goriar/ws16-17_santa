@@ -14,6 +14,8 @@ NorthPoleHQ::NorthPoleHQ()
 	}
 
 	m_santa = new Santa();
+	numberOfElfRequests = 0;
+	numberOfReindeerRequests = 0;
 	start();
 }
 
@@ -37,6 +39,8 @@ NorthPoleHQ::NorthPoleHQ(int numberOfElves, int numberOfReindeers) {
 	}
 
 	m_santa = new Santa();
+	numberOfElfRequests = 0;
+	numberOfReindeerRequests = 0;
 	start();
 }
 
@@ -50,16 +54,42 @@ NorthPoleHQ::~NorthPoleHQ()
 	delete m_santa;
 }
 
+void NorthPoleHQ::requestToSanta(Request r)
+{
+	if (r == HELP_ELVES) {
+		numberOfElfRequests++;
+	}
+	if (r == DELIVER_PRESENTS) {
+		numberOfReindeerRequests++;
+	}
+
+	while (numberOfReindeerRequests == sizeof(m_reindeers)) {
+		mutex.lock();
+		m_santa->requestJob(r);
+		mutex.unlock();
+	}
+
+	while (numberOfElfRequests >= sizeof(m_elves)/4) {
+		mutex.lock();
+		m_santa->requestJob(r);
+		mutex.unlock();
+	}
+}
+
 void NorthPoleHQ::start() {
 	for each (Reindeer* w in m_reindeers)
 	{
-		m_threads.create_thread(w->work);
+		boost::thread t = boost::thread(&Reindeer::work, w);
+		m_threads.add_thread(&t);
 	}
 
 	for each (Elf* w in m_elves)
 	{
-		m_threads.create_thread(w->work);
+		boost::thread t = boost::thread(&Elf::work, w);
+		m_threads.add_thread(&t);
 	}
 
-	m_threads.create_thread(m_santa->work);
+	boost::thread t = boost::thread(&Santa::work, m_santa);
+	m_threads.add_thread(&t);
 }
+
