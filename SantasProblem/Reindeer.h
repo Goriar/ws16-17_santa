@@ -13,7 +13,8 @@ public:
 
 	enum Status{GOING_ON_VACATION, ON_VACATION, RETURNING_HOME, WAITING_IN_STABLE, STRAPPED_IN_SLEIGH, DELIVERING_PRESENTS};
 
-protected:
-	
+private:
+	static int id_inc;
+	int id = id_inc++;
 };
 

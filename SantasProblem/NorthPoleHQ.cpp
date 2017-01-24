@@ -1,8 +1,8 @@
-#include "stdafx.h"
+
 #include "NorthPoleHQ.h"
 #include <cmath>
 
-
+NorthPoleHQ* NorthPoleHQ::instance = NULL;
 NorthPoleHQ::NorthPoleHQ()
 {
 	for (int i = 0; i < 12; i++)
@@ -16,6 +16,7 @@ NorthPoleHQ::NorthPoleHQ()
 	m_santa = new Santa();
 	numberOfElfRequests = 0;
 	numberOfReindeerRequests = 0;
+	instance = this;
 	start();
 }
 
@@ -41,6 +42,7 @@ NorthPoleHQ::NorthPoleHQ(int numberOfElves, int numberOfReindeers) {
 	m_santa = new Santa();
 	numberOfElfRequests = 0;
 	numberOfReindeerRequests = 0;
+	instance = this;
 	start();
 }
 
@@ -52,6 +54,14 @@ NorthPoleHQ::~NorthPoleHQ()
 	m_reindeers.~vector();
 
 	delete m_santa;
+}
+
+NorthPoleHQ * NorthPoleHQ::getInstance()
+{
+	if (instance == NULL) {
+		NorthPoleHQ();
+	}
+	return instance;
 }
 
 void NorthPoleHQ::requestToSanta(Request r)
@@ -66,12 +76,22 @@ void NorthPoleHQ::requestToSanta(Request r)
 	while (numberOfReindeerRequests == sizeof(m_reindeers)) {
 		mutex.lock();
 		m_santa->requestJob(r);
+		numberOfReindeerRequests = 0;
+		for each (Reindeer* rnd in m_reindeers)
+		{
+			rnd->setStatus(Reindeer::GOING_ON_VACATION);
+		}
 		mutex.unlock();
 	}
 
 	while (numberOfElfRequests >= sizeof(m_elves)/4) {
 		mutex.lock();
 		m_santa->requestJob(r);
+		numberOfElfRequests = 0;
+		for each (Elf* e in m_elves)
+		{
+			e->setStatus(Elf::MAKING_PRESENTS);
+		}
 		mutex.unlock();
 	}
 }

@@ -14,12 +14,14 @@ public:
 	virtual ~NorthPoleHQ();
 	enum Request{HELP_ELVES,DELIVER_PRESENTS};
 
-	void requestToSanta(Request r);
+	static NorthPoleHQ* getInstance();
 
+	void requestToSanta(Request r);
 protected:
 	std::vector<Elf*> m_elves;
 	std::vector<Reindeer*> m_reindeers;
-	Santa* m_santa;
+	
+	Santa *m_santa;
 
 	boost::thread_group m_threads;
 
@@ -30,5 +32,6 @@ protected:
 
 private:
 	void start();
+	static NorthPoleHQ* instance;
 };
 
