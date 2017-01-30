@@ -1,4 +1,5 @@
 #pragma once
+#include<boost\thread\mutex.hpp>
 class Worker
 {
 public:
@@ -11,5 +12,7 @@ public:
 protected:
 	int m_currentStatus;
 	bool m_markedForDeletion = false;
+
+	boost::mutex m_workerMutex;
 };
 

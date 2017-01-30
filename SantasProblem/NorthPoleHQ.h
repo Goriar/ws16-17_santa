@@ -17,6 +17,7 @@ public:
 	static NorthPoleHQ* getInstance();
 
 	void requestToSanta(Request r);
+	void writeInHQLog(std::string message);
 protected:
 	std::vector<Elf*> m_elves;
 	std::vector<Reindeer*> m_reindeers;
@@ -28,7 +29,8 @@ protected:
 	int numberOfElfRequests;
 	int numberOfReindeerRequests;
 
-	boost::mutex mutex;
+	boost::mutex m_requestMutex;
+	boost::mutex m_writeMutex;
 
 private:
 	void start();

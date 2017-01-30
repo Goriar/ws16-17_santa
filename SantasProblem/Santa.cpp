@@ -17,24 +17,33 @@ Santa::~Santa()
 }
 
 void Santa::deliverPresents() {
-	std::cout << "Santa: Bringing joy to the world...except me \n";
+	std::string message =  "Santa: Bringing joy to the world...except me";
+	NorthPoleHQ::getInstance()->writeInHQLog(message);
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
 	m_currentStatus = WAITING_FOR_SWEET_RELEASE_OF_DEATH;
 }
 
 void Santa::helpElves() {
 
-	std::cout << "Santa: Making presents for incompetent elves \n";
+	NorthPoleHQ* hq = NorthPoleHQ::getInstance();
+
+	std::string message = "Santa: Making presents for incompetent elves";
+	hq->writeInHQLog(message);
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
-	std::cout << "Santa: Done..going to sleep \n";
+	message = "Santa: Done..going to sleep";
+	hq->writeInHQLog(message);
 	m_currentStatus = WAITING_FOR_SWEET_RELEASE_OF_DEATH;
 }
 
 void Santa::strapInReindeers() {
-	std::cout << "Santa: Strapping in Reindeers \n";
+
+	NorthPoleHQ* hq = NorthPoleHQ::getInstance();
+	std::string message = "Santa: Strapping in Reindeers";
+	hq->writeInHQLog(message);
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
 	deliverPresents();
-	std::cout << "Santa: Done..going to sleep \n";
+	message = "Santa: Done..going to sleep";
+	hq->writeInHQLog(message);
 	m_currentStatus = WAITING_FOR_SWEET_RELEASE_OF_DEATH;
 }
 

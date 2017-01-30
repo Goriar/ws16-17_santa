@@ -17,10 +17,19 @@ Reindeer::~Reindeer()
 }
 
 void Reindeer::goOnVaction() {
-	std::cout << "Reindeer " << id << ": Going on Vacation!\n";
+	NorthPoleHQ* hq = NorthPoleHQ::getInstance();
+	std::stringstream str;
+	str << "Reindeer " << id << ": Going on Vacation!";
+	std::string message = str.str();
+	hq->writeInHQLog(message);
+
 	int travelTime = rand() % 10 + 1;
 	boost::this_thread::sleep_for(boost::chrono::seconds(travelTime));
-	std::cout << "Reindeer " << id << ": Aaah, that's the life!\n";
+	
+	str << "Reindeer " << id << ": Aaah, that's the life!";
+	message = str.str();
+	hq->writeInHQLog(message);
+
 	int vacationTime = rand() % 10 + 1;
 	boost::this_thread::sleep_for(boost::chrono::seconds(travelTime));
 	m_currentStatus = RETURNING_HOME;
@@ -28,11 +37,19 @@ void Reindeer::goOnVaction() {
 
 void Reindeer::returnToNorthPole() {
 	
-	std::cout << "Reindeer " << id << ": Returning to home base!\n";
+	NorthPoleHQ* hq = NorthPoleHQ::getInstance();
+	std::stringstream str;
+	str << "Reindeer " << id << ": Returning to home base!";
+	std::string message = str.str();
+	hq->writeInHQLog(message);
+
 	int travelTime = rand() % 10 + 1;
 	boost::this_thread::sleep_for(boost::chrono::seconds(travelTime));
 	NorthPoleHQ::getInstance()->requestToSanta(NorthPoleHQ::DELIVER_PRESENTS);
-	std::cout << "Reindeer " << id << ": Waiting in stable!\n";
+
+
+	str << "Reindeer " << id << ": Waiting in stable!\n";
+	message = str.str();
 	m_currentStatus = WAITING_IN_STABLE;
 
 }

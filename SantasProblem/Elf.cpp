@@ -15,7 +15,9 @@ Elf::~Elf()
 }
 
 void Elf::makePresents() {
-	std::cout << "Elf: Making presents! Yaaaaaaay!\n";
+	std::string message;
+	message = "Elf: Making presents! Yaaaaaaay!";
+	NorthPoleHQ::getInstance()->writeInHQLog(message);
 	boost::this_thread::sleep_for(boost::chrono::seconds(5));
 }
 
@@ -29,7 +31,9 @@ void Elf::work(void) {
 			if (dice == 0) {
 				setStatus(CANT_MAKE_PRESENT);
 				NorthPoleHQ::getInstance()->requestToSanta(NorthPoleHQ::HELP_ELVES);
-				std::cout << "Elf: I cant make this! Help Santaaa!\n";
+				std::string message;
+				message = "Elf: I cant make this! Help Santaaa!";
+				NorthPoleHQ::getInstance()->writeInHQLog(message);
 			}
 			else {
 				makePresents();
