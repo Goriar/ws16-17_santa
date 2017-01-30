@@ -12,7 +12,5 @@ public:
 protected:
 	int m_currentStatus;
 	bool m_markedForDeletion = false;
-
-	boost::mutex m_workerMutex;
 };
 
