@@ -4,6 +4,7 @@
 #include "NorthPoleHQ.h"
 #include <stdio.h>
 
+int Elf::id_inc = 0;
 Elf::Elf()
 {
 	m_currentStatus = MAKING_PRESENTS;
@@ -16,12 +17,15 @@ Elf::~Elf()
 
 void Elf::makePresents() {
 	std::string message;
-	message = "Elf: Making presents! Yaaaaaaay!";
+	std::stringstream str;
+	str << "Elf" << id << ": Making presents! Yaaaaaaay!";
+	message = str.str();
 	NorthPoleHQ::getInstance()->writeInHQLog(message);
 	boost::this_thread::sleep_for(boost::chrono::seconds(5));
 }
 
 void Elf::work(void) {
+	std::stringstream str;
 	while (true) {
 		switch (m_currentStatus)
 		{
@@ -32,7 +36,8 @@ void Elf::work(void) {
 				setStatus(CANT_MAKE_PRESENT);
 				NorthPoleHQ::getInstance()->requestToSanta(NorthPoleHQ::HELP_ELVES);
 				std::string message;
-				message = "Elf: I cant make this! Help Santaaa!";
+				str << "Elf" << id << ": I cant make this! Help Santaaa!";
+				message = str.str();
 				NorthPoleHQ::getInstance()->writeInHQLog(message);
 			}
 			else {

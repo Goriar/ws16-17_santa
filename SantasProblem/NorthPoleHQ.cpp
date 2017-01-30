@@ -58,10 +58,13 @@ NorthPoleHQ::~NorthPoleHQ()
 
 NorthPoleHQ * NorthPoleHQ::getInstance()
 {
+	boost::mutex m;
+	m.timed_lock(boost::xtime());
 	if (instance == NULL) {
 		NorthPoleHQ();
 	}
 	return instance;
+
 }
 
 void NorthPoleHQ::requestToSanta(Request r)
@@ -74,7 +77,7 @@ void NorthPoleHQ::requestToSanta(Request r)
 		numberOfReindeerRequests++;
 	}
 
-	if (numberOfReindeerRequests == m_reindeers.size()) {
+	if (numberOfReindeerRequests == m_reindeers.size() && r == DELIVER_PRESENTS) {
 		m_santa->requestJob(r);
 		numberOfReindeerRequests = 0;
 		for each (Reindeer* rnd in m_reindeers)
@@ -83,7 +86,7 @@ void NorthPoleHQ::requestToSanta(Request r)
 		}
 	}
 
-	if (numberOfElfRequests >= m_elves.size()/4) {
+	if (numberOfElfRequests >= m_elves.size()/4 && r == HELP_ELVES) {
 		m_santa->requestJob(r);
 		numberOfElfRequests = 0;
 		for each (Elf* e in m_elves)

@@ -32,6 +32,7 @@ protected:
 	boost::mutex m_requestMutex;
 	boost::mutex m_writeMutex;
 
+
 private:
 	void start();
 	static NorthPoleHQ* instance;

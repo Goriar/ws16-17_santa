@@ -50,6 +50,7 @@ void Reindeer::returnToNorthPole() {
 
 	str << "Reindeer " << id << ": Waiting in stable!\n";
 	message = str.str();
+	hq->writeInHQLog(message);
 	m_currentStatus = WAITING_IN_STABLE;
 
 }
