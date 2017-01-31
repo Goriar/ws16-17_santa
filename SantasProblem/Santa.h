@@ -1,7 +1,7 @@
 #pragma once
-#include"Worker.h"
+#include "Worker.h"
 
-class Santa : Worker
+class Santa : public Worker
 {
 public:
 	Santa();

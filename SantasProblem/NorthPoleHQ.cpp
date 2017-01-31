@@ -67,9 +67,9 @@ NorthPoleHQ * NorthPoleHQ::getInstance()
 
 }
 
-void NorthPoleHQ::requestToSanta(Request r)
+void NorthPoleHQ::requestToSanta(Request r, const Worker *w)
 {
-	m_requestMutex.lock();
+	
 	if (r == HELP_ELVES) {
 		numberOfElfRequests++;
 	}
@@ -77,18 +77,22 @@ void NorthPoleHQ::requestToSanta(Request r)
 		numberOfReindeerRequests++;
 	}
 
-	if (numberOfReindeerRequests == m_reindeers.size() && r == DELIVER_PRESENTS) {
+	m_requestMutex.lock();
+	if (numberOfReindeerRequests == m_reindeers.size()) {
 		m_santa->requestJob(r);
 		numberOfReindeerRequests = 0;
+		m_santa->setStatus(Santa::WAITING_FOR_SWEET_RELEASE_OF_DEATH);
 		for each (Reindeer* rnd in m_reindeers)
 		{
 			rnd->setStatus(Reindeer::GOING_ON_VACATION);
 		}
+		
 	}
 
-	if (numberOfElfRequests >= m_elves.size()/4 && r == HELP_ELVES) {
+	if (numberOfElfRequests >= m_elves.size()/4) {
 		m_santa->requestJob(r);
 		numberOfElfRequests = 0;
+		m_santa->setStatus(Santa::WAITING_FOR_SWEET_RELEASE_OF_DEATH);
 		for each (Elf* e in m_elves)
 		{
 			e->setStatus(Elf::MAKING_PRESENTS);

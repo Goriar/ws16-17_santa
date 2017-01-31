@@ -16,7 +16,7 @@ public:
 
 	static NorthPoleHQ* getInstance();
 
-	void requestToSanta(Request r);
+	void requestToSanta(Request r, const Worker *w);
 	void writeInHQLog(std::string message);
 protected:
 	std::vector<Elf*> m_elves;

@@ -16,16 +16,19 @@ Elf::~Elf()
 }
 
 void Elf::makePresents() {
+	/*
 	std::string message;
 	std::stringstream str;
 	str << "Elf" << id << ": Making presents! Yaaaaaaay!";
 	message = str.str();
 	NorthPoleHQ::getInstance()->writeInHQLog(message);
+	*/
 	boost::this_thread::sleep_for(boost::chrono::seconds(5));
 }
 
 void Elf::work(void) {
 	std::stringstream str;
+	srand(id);
 	while (true) {
 		switch (m_currentStatus)
 		{
@@ -34,11 +37,12 @@ void Elf::work(void) {
 			int dice = rand() % 6;
 			if (dice == 0) {
 				setStatus(CANT_MAKE_PRESENT);
-				NorthPoleHQ::getInstance()->requestToSanta(NorthPoleHQ::HELP_ELVES);
 				std::string message;
 				str << "Elf" << id << ": I cant make this! Help Santaaa!";
 				message = str.str();
 				NorthPoleHQ::getInstance()->writeInHQLog(message);
+				NorthPoleHQ::getInstance()->requestToSanta(NorthPoleHQ::HELP_ELVES, this);
+				str.str("");
 			}
 			else {
 				makePresents();
