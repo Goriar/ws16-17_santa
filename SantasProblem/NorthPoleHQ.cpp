@@ -103,9 +103,12 @@ void NorthPoleHQ::requestToSanta(Request r, const Worker *w)
 
 void NorthPoleHQ::writeInHQLog(std::string message)
 {
-	m_writeMutex.lock();
-	std::cout << message << std::endl;
-	m_writeMutex.unlock();
+	//m_writeMutex.lock();
+	boost::unique_lock<boost::timed_mutex> lock{ m_writeMutex,boost::try_to_lock };
+	if (lock.owns_lock() || lock.try_lock_for(boost::chrono::seconds{ 2 })) {
+		std::cout << message << std::endl;
+	}
+	//m_writeMutex.unlock();
 }
 
 

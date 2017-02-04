@@ -4,6 +4,7 @@
 #include"Reindeer.h"
 #include<vector>
 #include<boost\thread\thread.hpp>
+#include<boost\thread\scoped_thread.hpp>
 #include <boost\thread\mutex.hpp>
 
 class NorthPoleHQ
@@ -30,7 +31,7 @@ protected:
 	int numberOfReindeerRequests;
 
 	boost::mutex m_requestMutex;
-	boost::mutex m_writeMutex;
+	boost::timed_mutex m_writeMutex;
 
 
 private:
