@@ -6,10 +6,18 @@
 
 int main()
 {
-	NorthPoleHQ *hq = new NorthPoleHQ();
-	std::string s;
-	std::cin >> s;
-	delete hq;
+	NorthPoleHQ *hq;
+	
+	std::string again = "";
+	std::string stop = "";
+	do{		
+		again = "";
+		hq = new NorthPoleHQ();
+		std::cin >> stop;
+		delete hq;
+		std::cout << "\n Do you want to restart? yes/no\n";
+		std::cin >> again;
+	} while (again == "yes");
     return 0;
 }
 

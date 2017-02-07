@@ -6,6 +6,7 @@
 #include<boost\thread\thread.hpp>
 #include<boost\thread\scoped_thread.hpp>
 #include <boost\thread\mutex.hpp>
+#include<boost\atomic\atomic.hpp>
 
 class NorthPoleHQ
 {
@@ -27,8 +28,8 @@ protected:
 
 	boost::thread_group m_threads;
 
-	int numberOfElfRequests;
-	int numberOfReindeerRequests;
+	boost::atomic<int> numberOfElfRequests;
+	boost::atomic<int> numberOfReindeerRequests;
 
 	boost::mutex m_requestMutex;
 	boost::timed_mutex m_writeMutex;

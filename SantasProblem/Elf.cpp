@@ -27,32 +27,40 @@ void Elf::makePresents() {
 }
 
 void Elf::work(void) {
-	std::stringstream str;
-	srand(id);
-	while (true) {
-		switch (m_currentStatus)
-		{
-		case MAKING_PRESENTS:
-		{
-			int dice = rand() % 6;
-			if (dice == 0) {
-				setStatus(CANT_MAKE_PRESENT);
-				std::string message;
-				str << "Elf" << id << ": I cant make this! Help Santaaa!";
-				message = str.str();
-				NorthPoleHQ::getInstance()->writeInHQLog(message);
-				NorthPoleHQ::getInstance()->requestToSanta(NorthPoleHQ::HELP_ELVES, this);
-				str.str("");
+	try {
+		std::stringstream str;
+		srand(id);
+		while (!m_markedForDeletion) {
+			
+			switch (m_currentStatus)
+			{
+			case MAKING_PRESENTS:
+			{
+				int dice = rand() % 6;
+				if (dice == 0) {
+					setStatus(CANT_MAKE_PRESENT);
+					std::string message;
+					str << "Elf " << id << ": I cant make this! Help Santaaa!";
+					message = str.str();
+					NorthPoleHQ::getInstance()->writeInHQLog(message);
+					NorthPoleHQ::getInstance()->requestToSanta(NorthPoleHQ::HELP_ELVES, this);
+					str.str("");
+				}
+				else {
+					makePresents();
+				}
+				break;
 			}
-			else {
-				makePresents();
+			case CANT_MAKE_PRESENT:
+				break;
+			default:
+				break;
 			}
-			break;
+			boost::this_thread::interruption_point();
 		}
-		case CANT_MAKE_PRESENT:
-			break;
-		default:
-			break;
-		}
+
+	}
+	catch (boost::thread_interrupted&) {
+		m_markedForDeletion = true;
 	}
 }

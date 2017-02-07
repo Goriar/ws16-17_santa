@@ -27,7 +27,7 @@ void Reindeer::goOnVaction() {
 	boost::this_thread::sleep_for(boost::chrono::seconds(travelTime));
 	
 	str.str("");
-	str << "Reindeer " << id << ": Aaah, that's the life!";
+	str << "Reindeer " << id << ": Having the time of my life!";
 	message = str.str();
 	hq->writeInHQLog(message);
 
@@ -61,26 +61,33 @@ void Reindeer::deliverPresents() {
 }
 
 void Reindeer::work(void) {
-	srand(id);
-	while (true) {
-		switch (m_currentStatus)
-		{
-		case ON_VACATION:
-			break;
-		case GOING_ON_VACATION:
-			goOnVaction();
-			break;
-		case RETURNING_HOME:
-			returnToNorthPole();
-		case WAITING_IN_STABLE:
-			boost::this_thread::sleep_for(boost::chrono::seconds(1));
-			break;
-		case DELIVERING_PRESENTS:
-			deliverPresents();
-			break;
-		default:
-			break;
+	try {
+		srand(id);
+		while (!m_markedForDeletion) {
+			
+			switch (m_currentStatus)
+			{
+			case ON_VACATION:
+				break;
+			case GOING_ON_VACATION:
+				goOnVaction();
+				break;
+			case RETURNING_HOME:
+				returnToNorthPole();
+			case WAITING_IN_STABLE:
+				boost::this_thread::sleep_for(boost::chrono::seconds(1));
+				break;
+			case DELIVERING_PRESENTS:
+				deliverPresents();
+				break;
+			default:
+				break;
+			}
+			boost::this_thread::interruption_point();
 		}
+	}
+	catch (boost::thread_interrupted&) {
+		m_markedForDeletion = true;
 	}
 }
 
